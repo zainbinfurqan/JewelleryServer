@@ -9,6 +9,10 @@
 "use strict";
 var mongoose = require('mongoose'),
     UserModel = mongoose.model('userSchema'),
+    ShopModel = mongoose.model('shopSchema'),
+    loginSchema = mongoose.model('loginSchema'),
+    bcrypt = require('bcryptjs'),
+    salt = bcrypt.genSaltSync(10),
     genericFunction = require('../../utils-funtions/genric-funtions'),
     { _responseWrapper } = require('../../utils-funtions/response-wapper')
 
@@ -18,19 +22,43 @@ var mongoose = require('mongoose'),
 * =======================================================================
 * */
 
-exports.addUserFN = async (req, res) => {
-    console.log(req.body)
-    let result = await genericFunction._basePost(UserModel, req.body);
-    if (!result.status) {
-        if (result.error['code'] == 11000) {
-            return _responseWrapper(
-                false,
-                "alreadyExist",
-                400
-            );
+exports.singupFN = async (req, res) => {
+    if (req.body.email && req.body.fullName && req.body.shopName && req.body.address && req.body.password) {
+        let user_signip = await genericFunction._basePost(UserModel, req.body);
+        if (!user_signip.status) {
+            if (user_signip.error['code'] == 11000)
+                return _responseWrapper(false, "alreadyExist", 400);
+            return _responseWrapper(false, user_shop.error['message'], 400);
         }
+
+        let shopData = {
+            userId: user_signip.data._id,
+            ...req.body
+        }
+
+        let user_shop = await genericFunction._basePost(ShopModel, shopData);
+
+        if (!user_shop.status) {
+            return _responseWrapper(false, user_shop.error['message'], 400);
+        }
+        req.body.password = bcrypt.hashSync(req.body.password, salt);
+
+        let login_data = {
+            userId: user_signip.data._id,
+            ...req.body
+        }
+
+        let auth_data = await genericFunction._basePost(loginSchema, login_data)
+
+        if (!auth_data.status) {
+            return _responseWrapper(false, user_shop.error['message'], 400);
+        }
+
+        return _responseWrapper(true, "createSuccess", 200)
+
+    } else {
+        return _responseWrapper(false, "please reqiured all fields", 400)
     }
-    return _responseWrapper(true, "createSuccess", 200)
 }
 
 

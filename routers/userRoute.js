@@ -1,5 +1,5 @@
 const express = require('express');
-const { addUserFN ,fetchUserFN,putUserFN,deleteUserFN} = require('../controllers/authentication/userController')
+const { singupFN ,fetchUserFN,putUserFN,deleteUserFN} = require('../controllers/authentication/userController')
 const route = express.Router();
 
 route.get('/', (req, res) => {
@@ -11,7 +11,7 @@ route.get('/', (req, res) => {
 })
 
 route.post('/', (req, res) => {
-    addUserFN(req, res)
+    singupFN(req, res)
         .then(
             (success) => res.status(success.statusCode).send(success),
             (err) => { res.status(err.statusCode).send(err) }

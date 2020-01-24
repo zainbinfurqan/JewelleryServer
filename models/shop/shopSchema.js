@@ -9,8 +9,8 @@ const shopSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    logo:{
-        type:String
+    logo: {
+        type: String
     },
     longitude: {
         type: Number,
@@ -22,6 +22,10 @@ const shopSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    socialLink:[]
+    userId: {
+        type: Object,
+        required: true
+    },
+    socialLink: []
 }, { runSettersOnQuery: true });
-module.exports =  mongoose.model('shopSchema', shopSchema);
+module.exports = mongoose.model('shopSchema', shopSchema);
