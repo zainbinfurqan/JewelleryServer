@@ -19,6 +19,7 @@ var mongoose = require('mongoose'),
 * */
 
 exports.addUserFN = async (req, res) => {
+    console.log(req.body)
     let result = await genericFunction._basePost(UserModel, req.body);
     if (!result.status) {
         if (result.error['code'] == 11000) {

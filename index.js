@@ -5,7 +5,7 @@ var bodyParser = require('body-parser')
 const models = require('./models/index')
 app.use(bodyParser.urlencoded({ extended: true }));
 connectDB()
-const Port = process.env.Port || 3000;
+const Port = process.env.PORT || 3000;
 app.use(express.json({ extended: false }));
 const userRoute = require('./routers/userRoute')
 const loginRoute = require('./routers/loginRoute')
