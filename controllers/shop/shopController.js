@@ -49,6 +49,16 @@ exports.addShopFN = async (req, res) => {
 
 
 exports.fetchShopFN = async (req, res) => {
+    console.log("abc")
+    let arg = {
+        query: {}
+    }
+    let shop_data = await genericFunction._baseFetch(ShopModel, arg)
+    if (!shop_data.status) {
+        return _responseWrapper(false, shop_data.error['message'], 400);
+
+    }
+    return _responseWrapper(true, "fetch successfully", 200, shop_data)
 
 }
 

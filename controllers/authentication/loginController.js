@@ -9,9 +9,11 @@
 "use strict";
 var mongoose = require('mongoose'),
     LoginModel = mongoose.model('loginSchema'),
+    cacheModel = mongoose.model('cacheSchema'),
     bcrypt = require('bcryptjs'),
     salt = bcrypt.genSaltSync(10),
     genericFunction = require('../../utils-funtions/genric-funtions'),
+    jwt_token = require('../../utils-funtions/jwt-functions'),
     { _responseWrapper } = require('../../utils-funtions/response-wapper')
 
 /*
@@ -36,10 +38,29 @@ exports.addLoginFN = async (req, res) => {
         };
 
         let login_data = await genericFunction._baseFetch(LoginModel, args, "FindOne");
+        if (!login_data.status) {
+            return _responseWrapper(false, login_data.error['message'], 400);
+        }
 
         if (bcrypt.compareSync(req.body.password, login_data.data.password)) {
-            return _responseWrapper(true, "login", 200,login_data)
-
+            let jwtObj = {
+                _id: login_data.data._id,
+                userId: login_data.data.userId,
+                userEmail: login_data.data.email
+            }
+            let token = await jwt_token.generateToken(jwtObj);
+            if (token) {
+                let cacheData = {
+                    key: token,
+                    value: login_data.data.userId,
+                }
+                let cache_data = await genericFunction._basePost(cacheModel, cacheData);
+                console.log(cache_data)
+                if (!cache_data.status) {
+                    return _responseWrapper(false, cache_data.error['message'], 400);
+                }
+                return _responseWrapper(true, "login", 200, login_data)
+            }
         } else {
             return _responseWrapper(false, "password or email invalid", 400)
         }

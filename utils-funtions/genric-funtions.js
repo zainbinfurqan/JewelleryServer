@@ -25,7 +25,6 @@ const dbFindOne = async (model, args) => (
 );
 
 const dbFind = async (model, args) => {
-    console.log(args)
     return await model.find(args.query, args.parameterToGet)
         .sort(args.sort)
         .then((data) => ({

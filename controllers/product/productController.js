@@ -41,6 +41,17 @@ exports.addProductFN = async (req, res) => {
 
 
 exports.fetchProductFN = async (req, res) => {
+    console.log("abc")
+    let arg = {
+        query: {}
+    }
+    let product_data = await genericFunction._baseFetch(ProductModel, arg)
+    if (!product_data.status) {
+        return _responseWrapper(false, product_data.error['message'], 400);
+
+    }
+    return _responseWrapper(true, "fetch successfully", 200, product_data)
+
 
 }
 

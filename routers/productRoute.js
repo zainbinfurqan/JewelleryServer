@@ -1,5 +1,6 @@
 const express = require('express');
-const {addProductFN,deleteProductFN,fetchProductFN,putProductFN} = require('../controllers/product/productController')
+const { addProductFN, deleteProductFN, fetchProductFN, putProductFN } = require('../controllers/product/productController')
+const { authenticationToken } = require('../utils-funtions/authentication')
 const route = express.Router();
 
 route.get('/', (req, res) => {

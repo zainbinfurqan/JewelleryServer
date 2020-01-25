@@ -1,1 +1,1 @@
-const secret = "nd723rji"
+exports.secret = "nd723rji"
