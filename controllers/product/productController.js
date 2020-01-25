@@ -41,7 +41,6 @@ exports.addProductFN = async (req, res) => {
 
 
 exports.fetchProductFN = async (req, res) => {
-    console.log("abc")
     let arg = {
         query: {}
     }
