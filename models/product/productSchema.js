@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const productSchema = new mongoose.Schema({
     productName: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        lowercase: true,
     },
     productPrice: {
         type: Number,
@@ -13,10 +15,17 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    productPicture:{
-
-    },
+    productPicture: [],
     categoryId: {
+        type: Object,
+        required: true
+    },
+    productCode: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    shopId: {
         type: Object,
         required: true
     },
@@ -25,4 +34,4 @@ const productSchema = new mongoose.Schema({
         default: false
     }
 }, { runSettersOnQuery: true });
-module.exports  = mongoose.model('productSchema', productSchema);
+module.exports = mongoose.model('productSchema', productSchema);

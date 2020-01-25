@@ -10,6 +10,7 @@
 var mongoose = require('mongoose'),
     LoginModel = mongoose.model('loginSchema'),
     bcrypt = require('bcryptjs'),
+    salt = bcrypt.genSaltSync(10),
     genericFunction = require('../../utils-funtions/genric-funtions'),
     { _responseWrapper } = require('../../utils-funtions/response-wapper')
 
@@ -22,7 +23,6 @@ var mongoose = require('mongoose'),
 exports.addLoginFN = async (req, res) => {
 
     if (req.body.email && req.body.password) {
-        console.log(req.body)
 
         let query = {
             email: req.body.email
@@ -37,9 +37,13 @@ exports.addLoginFN = async (req, res) => {
 
         let login_data = await genericFunction._baseFetch(LoginModel, args, "FindOne");
 
-        console.log(login_data);
+        if (bcrypt.compareSync(req.body.password, login_data.data.password)) {
+            return _responseWrapper(true, "login", 200,login_data)
 
-        return _responseWrapper(true, "loginsuccessfully", 200)
+        } else {
+            return _responseWrapper(false, "password or email invalid", 400)
+        }
+
 
     } else {
         return _responseWrapper(false, "please reqiured all fields", 400)

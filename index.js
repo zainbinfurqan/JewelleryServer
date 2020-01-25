@@ -12,11 +12,13 @@ const loginRoute = require('./routers/loginRoute')
 const productRoute = require('./routers/productRoute')
 const reviewRoute = require('./routers/reviewRoute')
 const shopRoute = require('./routers/shopRoute')
+const categoryRoute = require('./routers/categoryRoute')
 
 app.use('/signup', userRoute)
 app.use('/login', loginRoute)
 app.use('/product', productRoute)
 app.use('/shop', shopRoute)
 app.use('/review', reviewRoute)
+app.use('/category', categoryRoute)
 
 app.listen(Port, () => console.log(`port listen on ${Port}`))
