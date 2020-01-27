@@ -27,7 +27,7 @@ exports.singupFN = async (req, res) => {
         let user_signip = await genericFunction._basePost(UserModel, req.body);
         if (!user_signip.status) {
             if (user_signip.error['code'] == 11000)
-                return _responseWrapper(false, "alreadyExist", 400);
+                return _responseWrapper(false, "alreadyExist", 409);
             return _responseWrapper(false, user_shop.error['message'], 400);
         }
 
