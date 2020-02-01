@@ -23,11 +23,12 @@ var mongoose = require('mongoose'),
 * */
 
 exports.singupFN = async (req, res) => {
+    console.log(req.body)
     if (req.body.email && req.body.fullName && req.body.shopName && req.body.address && req.body.password) {
         let user_signip = await genericFunction._basePost(UserModel, req.body);
         if (!user_signip.status) {
             if (user_signip.error['code'] == 11000)
-                return _responseWrapper(false, "alreadyExist", 400);
+                return _responseWrapper(false, "alreadyExist", 208);
             return _responseWrapper(false, user_shop.error['message'], 400);
         }
 
@@ -57,7 +58,7 @@ exports.singupFN = async (req, res) => {
         return _responseWrapper(true, "createSuccess", 200)
 
     } else {
-        return _responseWrapper(false, "please reqiured all fields", 400)
+        return _responseWrapper(false, "please reqiured all fields", 200)
     }
 }
 
