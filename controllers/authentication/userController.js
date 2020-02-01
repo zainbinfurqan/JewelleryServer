@@ -28,13 +28,8 @@ exports.singupFN = async (req, res) => {
         let user_signip = await genericFunction._basePost(UserModel, req.body);
         if (!user_signip.status) {
             if (user_signip.error['code'] == 11000)
-<<<<<<< HEAD
-                return _responseWrapper(false, "alreadyExist", 208);
-            return _responseWrapper(false, user_shop.error['message'], 400);
-=======
                 return _responseWrapper(false, "alreadyExist", 202);
             return _responseWrapper(false, user_shop.error['message'], 202);
->>>>>>> 6c9bff31dbd8b71c0c8d1d579a3780724d3083ab
         }
 
         let shopData = {
@@ -63,11 +58,7 @@ exports.singupFN = async (req, res) => {
         return _responseWrapper(true, "createSuccess", 200)
 
     } else {
-<<<<<<< HEAD
-        return _responseWrapper(false, "please reqiured all fields", 200)
-=======
         return _responseWrapper(false, "please reqiured all fields", 202)
->>>>>>> 6c9bff31dbd8b71c0c8d1d579a3780724d3083ab
     }
 }
 
