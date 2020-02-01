@@ -42,22 +42,20 @@ exports.addProductFN = async (req, res) => {
 
 
 exports.fetchProductFN = async (req, res) => {
+    console.log(req.query)
 
-    let arg;
-
-    arg = {
-        query: {}
-    }
+    let matchObj = {};
 
     if (req.query.shopId) {
-        arg = {
-            query: { shopId:mongoose.Types.ObjectId(req.query.shopId), isDelete: false }
-        }
+        matchObj['shopId'] = mongoose.Types.ObjectId(req.query.shopId);
     }
-
-
+    let arg = {
+        query: { ...matchObj, isDelete: false },
+    }
+    console.log(arg.query)
     let product_data = await genericFunction._baseFetch(ProductModel, arg)
     console.log(product_data)
+
     if (!product_data.status) {
         return _responseWrapper(false, product_data.error['message'], 400);
     }

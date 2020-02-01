@@ -28,8 +28,13 @@ exports.singupFN = async (req, res) => {
         let user_signip = await genericFunction._basePost(UserModel, req.body);
         if (!user_signip.status) {
             if (user_signip.error['code'] == 11000)
+<<<<<<< HEAD
                 return _responseWrapper(false, "alreadyExist", 208);
             return _responseWrapper(false, user_shop.error['message'], 400);
+=======
+                return _responseWrapper(false, "alreadyExist", 202);
+            return _responseWrapper(false, user_shop.error['message'], 202);
+>>>>>>> 6c9bff31dbd8b71c0c8d1d579a3780724d3083ab
         }
 
         let shopData = {
@@ -40,7 +45,7 @@ exports.singupFN = async (req, res) => {
         let user_shop = await genericFunction._basePost(ShopModel, shopData);
 
         if (!user_shop.status) {
-            return _responseWrapper(false, user_shop.error['message'], 400);
+            return _responseWrapper(false, user_shop.error['message'], 202);
         }
         req.body.password = bcrypt.hashSync(req.body.password, salt);
 
@@ -52,13 +57,17 @@ exports.singupFN = async (req, res) => {
         let auth_data = await genericFunction._basePost(loginSchema, login_data)
 
         if (!auth_data.status) {
-            return _responseWrapper(false, user_shop.error['message'], 400);
+            return _responseWrapper(false, user_shop.error['message'], 202);
         }
 
         return _responseWrapper(true, "createSuccess", 200)
 
     } else {
+<<<<<<< HEAD
         return _responseWrapper(false, "please reqiured all fields", 200)
+=======
+        return _responseWrapper(false, "please reqiured all fields", 202)
+>>>>>>> 6c9bff31dbd8b71c0c8d1d579a3780724d3083ab
     }
 }
 
@@ -70,7 +79,7 @@ exports.fetchUserFN = async (req, res) => {
     };
     let result = await genericFunction._baseFetch(UserModel, args);
     if (!result.status)
-        return _responseWrapper(false, new_user.error['message'], 400)
+        return _responseWrapper(false, new_user.error['message'], 202)
 
     return _responseWrapper(true, "fetchSuccess", 200, result)
 }
@@ -83,7 +92,7 @@ exports.putUserFN = async (req, res) => {
             return _responseWrapper(
                 false,
                 "alreadyExist",
-                400
+                202
             );
         }
     }
@@ -97,7 +106,7 @@ exports.deleteUserFN = async (req, res) => {
             return _responseWrapper(
                 false,
                 "alreadyExist",
-                400
+                202
             );
         }
     }

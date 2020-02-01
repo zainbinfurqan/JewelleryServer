@@ -39,7 +39,7 @@ exports.addLoginFN = async (req, res) => {
 
         let login_data = await genericFunction._baseFetch(LoginModel, args, "FindOne");
         if (!login_data.status) {
-            return _responseWrapper(false, login_data.error['message'], 400);
+            return _responseWrapper(false, login_data.error['message'], 202);
         }
 
         if (bcrypt.compareSync(req.body.password, login_data.data.password)) {
@@ -57,17 +57,17 @@ exports.addLoginFN = async (req, res) => {
                 let cache_data = await genericFunction._basePost(cacheModel, cacheData);
                 console.log(cache_data)
                 if (!cache_data.status) {
-                    return _responseWrapper(false, cache_data.error['message'], 400);
+                    return _responseWrapper(false, cache_data.error['message'], 202);
                 }
                 return _responseWrapper(true, "login", 200, login_data)
             }
         } else {
-            return _responseWrapper(false, "password or email invalid", 400)
+            return _responseWrapper(false, "password or email invalid", 202)
         }
 
 
     } else {
-        return _responseWrapper(false, "please reqiured all fields", 400)
+        return _responseWrapper(false, "please reqiured all fields", 202)
     }
 
 }
