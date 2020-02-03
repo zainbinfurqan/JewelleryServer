@@ -23,7 +23,7 @@ var mongoose = require('mongoose'),
 * */
 
 exports.addLoginFN = async (req, res) => {
-
+console.log(req.body.email)
     if (req.body.email && req.body.password) {
 
         let query = {
