@@ -23,6 +23,7 @@ var mongoose = require('mongoose'),
 * */
 
 exports.singupFN = async (req, res) => {
+    console.log(req.body)
     if (req.body.email && req.body.fullName && req.body.shopName && req.body.address && req.body.password) {
         let user_signip = await genericFunction._basePost(UserModel, req.body);
         if (!user_signip.status) {

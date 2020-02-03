@@ -20,6 +20,7 @@ var mongoose = require('mongoose'),
 
 exports.addProductFN = async (req, res) => {
 
+
     if (req.body.productName && req.body.categoryId &&
         req.body.productCode && req.body.shopId && req.body.productDetail && req.body.productPrice) {
 
@@ -88,7 +89,6 @@ exports.fetchProductFN = async (req, res) => {
 
     if (!product_data.status) {
         return _responseWrapper(false, product_data.error['message'], 400);
-
     }
     return _responseWrapper(true, "fetch successfully", 200, product_data)
 
