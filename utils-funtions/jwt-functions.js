@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken'),
 
 
 const generateToken = async (JWT_obt, expiresIn = '24h') => {
-    return  jwt.sign(
+    return jwt.sign(
         JWT_obt
         , secret, { expiresIn });
 }
@@ -21,7 +21,12 @@ const decodeToken = async (token) => {
 
 const verifyToken = async (token) => {
     return jwt.verify(token, secret, (err, decoded) => {
-        return decoded // bar
+        if (err) {
+            return false
+        } else {
+            // console.log(decoded)
+            return decoded;
+        }
     });
 }
 module.exports = {

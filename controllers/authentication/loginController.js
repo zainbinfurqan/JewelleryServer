@@ -22,8 +22,8 @@ var mongoose = require('mongoose'),
 * =======================================================================
 * */
 
-exports.addLoginFN = async (req, res) => {
-console.log(req.body.email)
+exports.LoginFN = async (req, res) => {
+
     if (req.body.email && req.body.password) {
 
         let query = {
@@ -41,7 +41,6 @@ console.log(req.body.email)
         if (!login_data.status) {
             return _responseWrapper(false, login_data.error['message'], 202);
         }
-
         if (bcrypt.compareSync(req.body.password, login_data.data.password)) {
             let jwtObj = {
                 _id: login_data.data._id,
@@ -55,7 +54,6 @@ console.log(req.body.email)
                     value: login_data.data.userId,
                 }
                 let cache_data = await genericFunction._basePost(cacheModel, cacheData);
-                console.log(cache_data)
                 if (!cache_data.status) {
                     return _responseWrapper(false, cache_data.error['message'], 202);
                 }
@@ -72,20 +70,37 @@ console.log(req.body.email)
 
 }
 
+exports.LogOutFN = async (req, res) => {
 
-
-exports.fetchLoginFN = async (req, res) => {
-
+    let apiToken = req.headers["authorization"];
+    if (apiToken) {
+        await cacheHelper.removeSession(
+            // cacheHelper.cacheInstance["session-cache"],
+            apiToken
+        );
+        // req.userId = req.body.userId
+        // ActivityLog.setActivityLogFN(
+        //     req,
+        //     "Logout",
+        //     "[" + req.method + "]: logout @ lemostre",
+        //     {}
+        // );
+        return _responseWrapper(true, "Logout successfully", 200);
+    } else return _responseWrapper(false, "Authorization token is required", 401);
 }
 
+// exports.fetchLoginFN = async (req, res) => {
 
-exports.putLoginFN = async (req, res) => {
-
-}
+// }
 
 
-exports.deleteLoginFN = async (req, res) => {
+// exports.putLoginFN = async (req, res) => {
 
-}
+// }
+
+
+// exports.deleteLoginFN = async (req, res) => {
+
+// }
 
 

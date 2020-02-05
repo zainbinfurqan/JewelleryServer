@@ -37,18 +37,66 @@ exports.addCategoryFN = async (req, res) => {
 }
 
 
-
 exports.fetchCategoryFN = async (req, res) => {
 
+    let arg = {};
+    let category_data = await genericFunction._baseFetch(CategoryModel, arg)
+    console.log(category_data)
+    if (!category_data.status) {
+        return _responseWrapper(false, category_data.error['message'], 400);
+    }
+    return _responseWrapper(true, "fetch successfully", 200, category_data)
 }
 
 
 exports.putCategoryFN = async (req, res) => {
 
+    if (req.body.category_id) {
+
+        let arg = {
+            query: {
+                _id: req.body.category_id
+            },
+            updateObject: req.body,
+        }
+        let update_category = await GenericProcedure._basePut(CategoryModel, arg, "findOneAndUpdate");
+
+        if (!update_category.status)
+            return _responseWrapper(false, update_category.error["message"], 400);
+
+        return _responseWrapper(true, 'updateSuccess', 200, update_category)
+
+    } else {
+        return _responseWrapper(false, "please reqiured all fields", 400)
+
+    }
+
 }
 
 
 exports.deleteCategoryFN = async (req, res) => {
+
+    if (req.body.category_id) {
+
+        let arg = {
+            query: {
+                _id: req.body.category_id
+            },
+            updateObject: {
+                isDelete: true
+            },
+        }
+        let update_category = await GenericProcedure._basePut(CategoryModel, arg, "findOneAndUpdate");
+
+        if (!update_category.status)
+            return _responseWrapper(false, update_category.error["message"], 400);
+
+        return _responseWrapper(true, 'updateSuccess', 200, update_category)
+
+    } else {
+        return _responseWrapper(false, "please reqiured all fields", 400)
+
+    }
 
 }
 
