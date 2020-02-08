@@ -41,7 +41,6 @@ exports.fetchCategoryFN = async (req, res) => {
 
     let arg = {};
     let category_data = await genericFunction._baseFetch(CategoryModel, arg)
-    console.log(category_data)
     if (!category_data.status) {
         return _responseWrapper(false, category_data.error['message'], 400);
     }

@@ -49,16 +49,24 @@ exports.addShopFN = async (req, res) => {
 
 
 exports.fetchShopFN = async (req, res) => {
-    console.log("abc")
+
+    let matchObject = {};
+    if (req.query.userID) {
+        matchObject['userId'] = mongoose.Types.ObjectId(req.query.userID)
+    }
+
     let arg = {
-        query: {}
+        query: {
+            ...matchObject, isDelete: false
+        },
+        // parameterToGet:  '_id shopId'
     }
     let shop_data = await genericFunction._baseFetch(ShopModel, arg)
     if (!shop_data.status) {
-        return _responseWrapper(false, shop_data.error['message'], 400);
+    return _responseWrapper(false, shop_data.error['message'], 200);
 
     }
-    return _responseWrapper(true, "fetch successfully", 200, shop_data)
+    return _responseWrapper(true, "fetch successfully", 200,shop_data)
 
 }
 
