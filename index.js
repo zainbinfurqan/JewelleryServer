@@ -14,6 +14,7 @@ const productRoute = require('./routers/productRoute')
 const reviewRoute = require('./routers/reviewRoute')
 const shopRoute = require('./routers/shopRoute')
 const categoryRoute = require('./routers/categoryRoute')
+const messageRoute = require('./routers/messageRoute')
 
 /*-----------------------RESTORE CACHE------------------*/
 
@@ -25,5 +26,6 @@ app.use('/product', productRoute)
 app.use('/shop', shopRoute)
 app.use('/review', reviewRoute)
 app.use('/category', categoryRoute)
-
+app.use('/messagesend', messageRoute)
+app.use('/musclezone')
 app.listen(Port, () => console.log(`port listen on ${Port}`))

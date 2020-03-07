@@ -3,4 +3,5 @@ let userSchema = require('./authentication/userSchema'),
     productSchema = require('./product/productSchema'),
     categorySchema = require('./category/categorySchema'),
     cacheSchema = require('./cache/cacheSchema'),
+    messageSchema = require('./message/messageSchema'),
     shopSchema = require('./shop/shopSchema');

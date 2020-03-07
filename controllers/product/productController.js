@@ -45,7 +45,6 @@ exports.addProductFN = async (req, res) => {
 
 exports.fetchProductFN = async (req, res) => {
     let matchObj = {};
-    console.log("abc")
     if (req.query.shopId) {
         matchObj['shopId'] = mongoose.Types.ObjectId(req.query.shopId);
     }
@@ -84,58 +83,12 @@ exports.fetchProductFN = async (req, res) => {
                 }
             }
         ],
-
     }
-
-    // if (req.query.shopId) {
-    //     matchObj['shopId'] = mongoose.Types.ObjectId(req.query.shopId);
-    // }
-
-    // let arg = {
-    //     query: [
-    //         {
-    //             $match: { ...matchObj, isDelete: false },
-    //         },
-    //         {
-    //             $lookup: {
-    //                 from: "shopschemas",
-    //                 localField: "shopId",
-    //                 foreignField: "_id",
-    //                 as: "Shop"
-    //             },
-    //         },
-    //         { $unwind: "$Shop" },
-    //         {
-    //             $lookup: {
-    //                 from: "categoryschemas",
-    //                 localField: "categoryId",
-    //                 foreignField: "_id",
-    //                 as: "Category"
-    //             },
-    //         },
-    //         { $unwind: "$Category" },
-    //         {
-    //             $project: {
-    //                 productName: 1,
-    //                 productPicture: 1,
-    //                 productPrice: 1,
-    //                 productCode: 1,
-    //                 shopName: "$Shop.shopName",
-    //                 shopId: "$Shop._id",
-    //                 categoryName: "$Category.categoryName",
-    //             }
-    //         }
-    //     ]
-    // }
-
     let product_data = await genericFunction._baseFetch(ProductModel, arg, 'Aggregate')
-    console.log(product_data)
     if (!product_data.status) {
         return _responseWrapper(false, product_data.error['message'], 200);
     }
     return _responseWrapper(true, "fetch successfully", 200, product_data)
-
-
 }
 
 

@@ -6,4 +6,3 @@ const connectDB = async () => {
     console.log("connnected...!")
 }
 module.exports = connectDB;
-// frgdwozZmdSpCk9s
